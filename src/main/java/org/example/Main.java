@@ -3,7 +3,6 @@ package org.example;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 
-import javax.imageio.event.IIOWriteProgressListener;import java.io.IO;import java.io.IOError;
 import java.io.IOException;
 import java.io.InputStream;import java.net.InetSocketAddress;
 import java.net.URLDecoder;import java.nio.charset.StandardCharsets;import java.sql.Connection;
@@ -35,9 +34,9 @@ public class Main {
     }
 
     private static void atenderRecados(HttpExchange troca) throws IOException{
-        troca.getResponseHeaders().set("Acess-Control-Allow-Origin", "*");
-        troca.getResponseHeaders().set("Acess-Control-Allow-Methods", "GET, POST, OPTIONS");
-        troca.getResponseHeaders().set("Acess-Control-Allow-Headers", "Context-Type");
+        troca.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
+        troca.getResponseHeaders().set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+        troca.getResponseHeaders().set("Access-Control-Allow-Headers", "Context-Type");
 
         try {
             if (troca.getRequestMethod().equals("OPTIONS")) {
@@ -115,7 +114,7 @@ public class Main {
             }
 
             byte[] pagina = arquivo.readAllBytes();
-            troca.getResponseHeaders().set("Context-Type", "text/html; charset=UTF-8");
+            troca.getResponseHeaders().set("Content-Type", "text/html; charset=UTF-8");
             troca.sendResponseHeaders(200, pagina.length);
             troca.getResponseBody().write(pagina);
             troca.close();
@@ -128,7 +127,7 @@ public class Main {
             HttpExchange troca, int status, String conteudo, String tipo
     ) throws IOException {
         byte[] resposta = conteudo.getBytes(StandardCharsets.UTF_8);
-        troca.getResponseHeaders().set("Context-Type", tipo + "; charset=UTF-8");
+        troca.getResponseHeaders().set("Content-Type", tipo + "; charset=UTF-8");
         troca.sendResponseHeaders(status, resposta.length);
         troca.getResponseBody().write(resposta);
         troca.close();
